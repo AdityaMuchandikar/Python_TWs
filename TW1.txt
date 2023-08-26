@@ -1,0 +1,60 @@
+					#TW-1
+'''
+Develop a menu driven program to implement a queue using lists and functions. The operations would be:
+a) Add an item to the queue (Enqueue)
+b) Delete an item from queue (Dequeue)
+c) Display the item at the front (QFront)
+d) Display the item at the rear (QRear)
+e) Display the queue
+'''
+
+
+def enqueue(Q):
+    item=input('Enter the item to add:')
+    Q.append(item)
+def dequeue(Q):
+    if len(Q)==0:
+        print('Queue underflow!')
+        return
+    else:
+        return Q.pop(0)
+def queueFront(Q):
+    if len(Q)==0:
+        print('Queue is empty')
+        return
+    else:
+        return Q[0]
+def queueRear(Q):
+    if len(Q)==0:
+        print('Queue is empty')
+        return
+    else:
+        return Q[len(Q)-1]
+def display(Q):
+    if len(Q)==0:
+        print('Queue is empty')
+        return
+    else:
+        print('The queue is\n',Q)
+def main():
+    Q=[]
+    while(True):
+        print('1.Enqueue 2.Dequeue 3.Queuefront 4.Queuerear 5.Display 6.Exit')
+        ch=int(input('Choose an option: '))
+        if ch==1:
+            enqueue(Q)
+        elif ch==2:
+            print('The deleted item is: ',dequeue(Q))
+        elif ch==3:
+            print('The first item is',queueFront(Q))
+        elif ch==4:
+            print('The last item is',queueRear(Q))
+        elif ch==5:
+            display(Q)
+        elif ch==6:
+            break
+        else:
+            print('Incorrect option!Rerun again...')
+            break
+if __name__ =='__main__':
+    main()

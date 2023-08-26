@@ -1,0 +1,142 @@
+					    #TERMWORK 3
+'''
+Problem statement
+Write a python program to read the books information from the user and store it in a CSV file containing 
+rows in the following format: bookNo,title,author,price 
+Develop a menu driven program with following options 
+1. Search the book by author 
+2. Search books below a specified price, raise an exception if the price entered is < 0
+3. Search books where the title contain a certain word
+4. Exit
+'''
+
+# importing required modules
+import csv
+
+# adding books in the records
+def addBooks():
+	key = True # loop variable
+	rows = [[]] # csv writing matrix
+	while key:
+		bookNo = int(input("Enter book number: "))
+		bookName = input("Enter book name: ") 
+		bookAuth = input("Enter book author: ")
+		bookPrice = int(input("Enter book price: "))
+		bookQty = input("Enter book quantity: ")
+		continueKey = input("Do you want to continue(y/n): ")
+		print('')
+		if continueKey.lower() == 'n': # exit control
+			key = False
+		rows.append([bookNo, bookName, bookAuth, bookPrice, bookQty])
+	with open('books.csv', 'a', newline='') as bookFile:
+		writeObj = csv.writer(bookFile)
+		writeObj.writerows(rows) # writing into csv
+
+# shows books from csv file
+def showBooks():
+	with open('books.csv', 'r') as bookFile:
+		readObj = csv.reader(bookFile)
+		for line in readObj:
+			print(line) 
+
+# initializes and clears book records
+# runs everytime the program is started
+def clearBooks():
+	loopIndex = 0
+	#initialising the fields
+	fields = ["No", "Name", "Author", "Price", "Quantity"]
+	with open('books.csv', 'w') as bookFile:
+		csvwriter = csv.writer(bookFile)        
+		csvwriter.writerow(fields)
+
+# searches book via given author
+def searchByAuth():
+	keyAuthor = input("Enter author name: ")
+	tmp = False # records found/not found
+	with open('books.csv', 'r') as bookFile:
+		readObj = csv.reader(bookFile)
+		for records in readObj:
+			# uses try/except to handle empty rows
+			try:
+				if records[2].lower() == keyAuthor.lower():
+					tmp = True
+					print(records)
+			except IndexError:
+				pass
+	if tmp == False:
+		print("Record not found")
+	else:
+		print("Records found")
+
+# searches book via given title
+def searchByTitle():
+	keyTitle = input("Enter book title: ")
+	tmp = False # records found/not found
+	with open('books.csv', 'r') as bookFile:
+		readObj = csv.reader(bookFile)
+		for records in readObj:
+			# uses try/except to handle empty rows
+			try:
+				if records[1].lower() == keyTitle.lower():
+					tmp = True
+					print(records)
+			except IndexError:
+				pass
+	if tmp == False:
+		print("Record not found")
+	else:
+		print("Records found")
+
+# searches for book under the specified price
+def showLowerPrice():
+	maxPrice = int(input("Enter max price: "))
+	if maxPrice < 0:
+		# for value in -ve
+		raise ValueError("Price must be a positive value.")
+
+	tmp = False # records found/not found
+	with open('books.csv', 'r') as bookFile:
+		readObj = csv.reader(bookFile)
+		for records in readObj:
+			# uses try/except to handle empty rows
+			try:
+				if int(records[3]) <= int(maxPrice):
+					tmp = True
+					print(records)
+			except:
+				pass
+	if tmp == False:
+		print("Record not found")
+	else:
+		print("Records found")
+
+def main():
+	# initialising the file
+	clearBooks()
+	key = True
+	while key:
+		print("1. Add books\n2. Show books\n3. Clear books\n4. Search by author")
+		print("5. Search by max price\n6. Search by title\n7. Exit")
+		choice = int(input("Enter choice: "))
+		# cli menu
+		match choice:
+			case 1:
+				addBooks()
+			case 2:
+				showBooks()
+			case 3:
+				clearBooks()
+			case 4:
+				searchByAuth()
+			case 5:
+				showLowerPrice()
+			case 6:
+				searchByTitle()
+			case 7:
+				key = False
+			case _:
+				print("Invalid option selected")
+		print("------------------------------")
+
+if __name__ == "__main__":
+	main()

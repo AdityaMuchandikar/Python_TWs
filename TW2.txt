@@ -1,0 +1,74 @@
+						#TW-2
+'''
+Store the following information in a dictionary:
+Course Code: Course Name, Faculty, Number of registrations. Perform the following operations using functions:
+a. Find Course Name that has highest number of registrations.
+b. Given the Course Code, display the associated details.
+c. Display details of all courses
+'''
+
+def addCourse(courses):
+    courseCode=input("Enter the course code:")
+    if courseCode in courses:
+        print("Duplicate code not allowed!!")
+    else:        
+        courseName=input("Enter the course name:")
+        courseFaculty=input("Enter the course Faculty:")
+        noOfRegs=input("Enter no of regs: ")
+        courses[courseCode]=[courseName,courseFaculty,noOfRegs]
+    print("Courses are: \n",courses)
+    
+def DispAll(courses):
+    if len(courses)==0:
+        print("No Courses!!")
+    else:       
+         print("Courses are: \n")
+         for courseCode, [courseName, courseFaculty, noOfRegs] in courses.items():
+             print(courseCode," ", courseName," ", courseFaculty," ", noOfRegs," ")
+
+def DispCourse(courses):
+    if len(courses)==0:
+        print("No Courses!!")
+    else:
+        courseCode=input("Enter the course code you want to search: ")
+        if courseCode in courses:
+            print("Course Details: \n")
+            print(courses[courseCode][0], courses[courseCode][1],courses[courseCode][2])
+        else:
+            print("Course with code",courseCode,"is not present")
+                
+def HighestRegs(courses):
+    if len(courses)==0:
+        print("No coures")
+        return
+    regs=[]
+    for details in courses.values():
+        regs.append(details[2])
+        maxRegs=max(regs)
+    print("The max no of regs is:",maxRegs)
+    print("Course(s) with the highest no of regs is/are:")
+    for courseCode, [courseName, courseFaculty, noOfRegs] in courses.items():
+        if max(regs)==noOfRegs:
+            print(courseName)
+    
+
+def main():
+    courses={}
+    while(1):
+        print("\n1)Add Course 2)DispAll 3)DispCourse 4)HighestRegs 5)Exit \n")
+        ch=int(input("Enter your choice: "))
+        if ch==1:
+                addCourse(courses)
+        elif ch==2:
+                DispAll(courses)
+        elif ch==3:
+                DispCourse(courses)
+        elif ch==4:
+                HighestRegs(courses)
+        elif ch==5:
+                break
+        else:
+                print("Invalid Option!!!")
+
+if __name__=="__main__":
+    main()                
