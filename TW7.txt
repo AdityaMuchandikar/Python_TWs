@@ -1,92 +1,62 @@
 					#TW-7
-# importing main module
-from tkinter import Tk,Canvas,Label,Entry,Button
+from tkinter import *
 
-# root functionalities
+
+def add():
+    num1 = int(first_entry.get())
+    num2 = int(second_entry.get())
+    res = num1 + num2
+    result_entry.delete(0, END)
+    result_entry.insert(0, res)
+
+
+def div():
+    num1 = int(first_entry.get())
+    num2 = int(second_entry.get())
+    res = num1 / num2
+    result_entry.delete(0, END)
+    result_entry.insert(0, res)
+
+
+def sub():
+    num1 = int(first_entry.get())
+    num2 = int(second_entry.get())
+    res = num1 - num2
+    result_entry.delete(0, END)
+    result_entry.insert(0, res)
+
+
+def mul():
+    num1 = int(first_entry.get())
+    num2 = int(second_entry.get())
+    res = num1 * num2
+    result_entry.delete(0, END)
+    result_entry.insert(0, res)
+
+
 root = Tk()
-root.title('Calculator')
-root.geometry('640x360')
+root.title("simple calculator")
+root.geometry("400x200")
+first_label = Label(root, text="First Number : ")
+first_label.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
+second_label = Label(root, text="Second Number : ")
+second_label.grid(row=1, column=0, columnspan=2, padx=5, pady=5)
+result_label = Label(root, text="Result")
+result_label.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
 
-# will house the display
-canvas1 = Canvas(root)
-canvas1.pack()
+first_entry = Entry(root, width=20)
+first_entry.grid(row=0, column=3, columnspan=2)
+second_entry = Entry(root, width=20)
+second_entry.grid(row=1, column=3, columnspan=2)
+result_entry = Entry(root, width=20)
+result_entry.grid(row=3, column=3, columnspan=2)
 
-# will house the buttons
-canvas2 = Canvas(root)
-canvas2.pack()
-
-num1 = 0
-num2 = 0
-# ------------------------------
-
-# functions
-def fnInitialize():
-	global num1, num2
-	num1 = float(entryNum1.get())
-	num2 = float(entryNum2.get())
-
-def fnAddNum():
-	fnInitialize()
-	ans = num1 + num2
-	labelAnsVal.config(text = f"Answer: {str(round(ans, 2))}")
-
-def fnSubNum():
-	fnInitialize()
-	ans = num1 - num2
-	labelAnsVal.config(text = f"Answer: {str(round(ans, 2))}")
-
-def fnMulNum():
-	fnInitialize()
-	ans = num1 * num2
-	labelAnsVal.config(text = f"Answer: {str(round(ans, 2))}")
-
-def fnDivNum():
-	fnInitialize()
-	ans = num1 / num2
-	labelAnsVal.config(text = f"Answer: {str(round(ans, 2))}")
-
-# ------------------------------
-# widgets
-
-# first number prompt
-lablelNum1 = Label(canvas1, text = "Enter num 1:")
-lablelNum1.grid(row = 1, column = 1)
-
-# first number will be here
-entryNum1 = Entry(canvas1)
-entryNum1.grid(row = 1, column = 2)
-
-# second number prompt
-lablelNum2 = Label(canvas1, text = "Enter num 2:")
-lablelNum2.grid(row = 2, column = 1)
-
-# second number will be here
-entryNum2 = Entry(canvas1)
-entryNum2.grid(row = 2, column = 2)
-
-# answer prompt
-lablelAns = Label(canvas1, text = "Answer")
-lablelAns.grid(row = 3, column = 1)
-
-# answer label
-labelAnsVal = Label(canvas1)
-labelAnsVal.grid(row = 3, column = 2)
-
-# addition button
-ButtonAdd = Button(canvas2, text = "Add", command = fnAddNum)
-ButtonAdd.grid(row = 1, column = 1)
-
-# subtraction button
-ButtonSub = Button(canvas2, text = "Sub", command = fnSubNum)
-ButtonSub.grid(row = 1, column = 2)
-
-# multiplication button
-ButtonMul = Button(canvas2, text = "Mul", command = fnMulNum)
-ButtonMul.grid(row = 1, column = 3)
-
-# division button
-ButtonDiv = Button(canvas2, text = "Div", command = fnDivNum)
-ButtonDiv.grid(row = 1, column = 4)
-
-# looping trough the program
+add_btn = Button(root, text="ADD", command=add)
+add_btn.grid(row=2, column=1)
+sub_btn = Button(root, text="SUB", command=sub)
+sub_btn.grid(row=2, column=2)
+mul_btn = Button(root, text="MUL", command=mul)
+mul_btn.grid(row=2, column=3)
+div_btn = Button(root, text="DIV", command=div)
+div_btn.grid(row=2, column=4)
 root.mainloop()
