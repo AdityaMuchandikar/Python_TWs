@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+char* classify_triangle(int a, int b, int c) {
+    if (a + b <= c || a + c <= b || b + c <= a) {
+        return "Not a triangle";
+    } else if (a == b && b == c) {
+        return "Equilateral triangle";
+    } else if (a == b || b == c || a == c) {
+        return "Isosceles triangle";
+    } else {
+        return "Scalene triangle";
+    }
+}
+
+int main() {
+    // Test cases based on boundary-value analysis
+    int test_cases[][3] = {
+        {1, 1, 1},   // Smallest equilateral triangle
+        {1, 1, 2},   // Smallest isosceles triangle
+        {1, 2, 3},   // Smallest scalene triangle
+        {10, 10, 10},// Largest equilateral triangle
+        {10, 10, 5}, // Largest isosceles triangle
+        {10, 7, 6},  // Largest scalene triangle
+        {10, 10, 20},// Not a triangle
+    };
+
+    int num_test_cases = sizeof(test_cases) / sizeof(test_cases[0]);
+
+    for (int i = 0; i < num_test_cases; i++) {
+        int a = test_cases[i][0];
+        int b = test_cases[i][1];
+        int c = test_cases[i][2];
+        char* result = classify_triangle(a, b, c);
+        printf("Triangle with sides %d, %d, %d is %s\n", a, b, c, result);
+    }
+
+    return 0;
+}

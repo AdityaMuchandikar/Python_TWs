@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+// Function to classify the type of triangle
+char* classify_triangle(int a, int b, int c) {
+    if (a + b <= c || a + c <= b || b + c <= a) {
+        return "Not a triangle";
+    } else if (a == b && b == c) {
+        return "Equilateral triangle";
+    } else if (a == b || b == c || a == c) {
+        return "Isosceles triangle";
+    } else {
+        return "Scalene triangle";
+    }
+}
+
+int main() {
+    // Test cases
+    int test_cases[][3] = {
+        {3, 3, 3},   // Equilateral triangle
+        {7, 4, 4},   // Isosceles triangle
+        {5, 12, 13}, // Scalene triangle
+        {1, 2, 3},   // Not a triangle
+    };
+
+    int num_test_cases = sizeof(test_cases) / sizeof(test_cases[0]);
+
+    for (int i = 0; i < num_test_cases; i++) {
+        int a = test_cases[i][0];
+        int b = test_cases[i][1];
+        int c = test_cases[i][2];
+        char* result = classify_triangle(a, b, c);
+        printf("Triangle with sides %d, %d, %d is %s\n", a, b, c, result);
+    }
+
+    return 0;
+}
