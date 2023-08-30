@@ -1,0 +1,565 @@
+tw1:
+
+
+def add(queue,data):
+    queue.append(data)
+    print("Added data Successfully")
+
+def delete(queue):
+    return queue.pop(0)
+
+def display(queue):
+    print("---------------------------------------")
+    print("Queue is :: ")
+    for data in queue:
+        print(data)
+    
+def main():
+    queue = []
+    while True:
+        print("Press 1 to Insert into queue ")
+        print("Press 2 to Delete from queue ")
+        print("Press 3 to Display queue ")
+        print("Press 4 to Exit ")
+
+        ch = int(input("Enter Your Choice :: "))
+
+        if ch == 1:
+            add(queue,input("Enter the data to be added in queue :: "))
+        elif ch == 2:  
+            print("Removed Element is :: ",delete(queue)) 
+        elif ch == 3:
+            display(queue)
+        elif ch == 4:
+            print("Exiting !!!")
+            break
+        else:
+            print("Invalid choice !!!")
+
+        print("-------------------------------------------")
+
+if __name__ == "__main__":
+    main()
+
+----------------------------------------------------------------------------------------------------------------------------------------
+tw2:
+
+def Store_informations(courses):
+    print()
+    course_code = input("Enter Course Code :: ").upper()
+    if course_code not in courses:
+        course_name = input("Enter the Course name :: ")
+        faculty = input("Enter the Faculty name :: ")
+        num_of_registrations = int(
+            input("Enter the number of registrations :: "))
+        courses[course_code] = {'course_name': course_name,
+                                'faculty': faculty, 'num_of_registrations': num_of_registrations}
+
+    else:
+        print("No Duplicate records can be created !!")
+
+    print()
+
+
+def Highest_num_of_registrations(courses):
+    print()
+    highest_registrations = 0
+    course_name = ""
+    for course in courses:
+        if courses[course]['num_of_registrations'] > highest_registrations:
+            highest_registrations = courses[course]['num_of_registrations']
+            course_name = course
+
+    print(f"{course_name} has the highest number of registrations of :: ",
+          highest_registrations)
+    print()
+
+
+def Details_of(courses, course_code):
+    print()
+    if course_code in courses:
+        print(f"Details of course code {course_code} is ::")
+        print("Course Name :: ", courses[course_code]["course_name"])
+        print("Course Code :: ", course_code)
+        print("Faculty Name :: ", courses[course_code]["faculty"])
+        print("Number of registrations :: ",
+              courses[course_code]['num_of_registrations'])
+    else:
+        print("Invalid Course Code!!")
+
+    print()
+
+
+def Display_all(courses):
+    print()
+    print("All Course Details ")
+    for course_code in courses:
+        for parameter in courses[course_code]:
+            print(f"{parameter}  :: {courses[course_code][parameter]}")
+        print()
+
+
+def main():
+    courses = {}
+    ch = 0
+    while ch != -1:
+        print("Press 1 to Store Information")
+        print("Press 2 to Find which course has highest number of registrations")
+        print("Press 3 to Find details of a particular course using course code")
+        print("Press 4 to Display all the course details")
+        print("Press 5 to Exit")
+        ch = int(input("Enter Your Choice :: "))
+
+        if ch == 1:
+            Store_informations(courses)
+        elif ch == 2:
+            Highest_num_of_registrations(courses)
+        elif ch == 3:
+            course_code = input(
+                "Enter the course code to find the details :: ").upper()
+            Details_of(courses, course_code)
+        elif ch == 4:
+            Display_all(courses)
+        elif ch == 5:
+            print("Exiting ... ")
+            ch = -1
+        else:
+            print("Invalid Choice !!!")
+            print()
+
+
+if __name__ == "__main__":
+    main()
+---------------------------------------------------------------------------------------------------------------------------------
+tw3
+
+
+import csv as csv
+
+
+def store_books():
+    print()
+    with open("books.csv", "a", newline="") as file:
+        writer = csv.writer(file)
+
+        book_num = int(input("Enter the book number :: "))
+        title = input("Enter the title of the book :: ")
+        author = input("Enter the name of the author :: ")
+        price = int(input("Enter the price of the book :: "))
+
+        details = [book_num, title, author, price]
+
+        writer.writerow(details)
+    print()
+
+
+def search_book_by_author():
+    print()
+    with open("books.csv", "r", newline="") as file:
+        flag = 0
+        reader = csv.reader(file)
+        author = input("Enter the Name of the author to search the book :: ")
+
+        for rows in reader:
+            if rows[2] == author:
+                flag = 1
+                print("Book Number :: " + rows[0] + "\tBook Title :: " +
+                      rows[1] + "\tBook Author :: " + rows[2] + "\tPrice :: " + rows[3])
+        if flag == 0:
+            print("Books for given author name is not present !!")
+    print()
+
+
+def search_books_by_price():
+    print()
+    with open("books.csv", "r", newline="") as file:
+        flag = 0
+        reader = csv.reader(file)
+
+        try:
+            price = input("Enter the price of the book to be searched :: ")
+            if int(price) > 0:
+
+                for rows in reader:
+                    if rows[3] == price:
+                        flag = 1
+                        print("Book Number :: " + rows[0] + "\tBook Title :: " +
+                              rows[1] + "\tBook Author :: " + rows[2] + "\tPrice :: " + rows[3])
+                if flag == 0:
+                    print("Books for given price value is not present!!")
+            else:
+                raise ValueError("Invalid price!!")
+
+        except Exception as error:
+            print(type(error), error)
+
+    print()
+
+
+def search_books_by_word():
+    print()
+    with open("books.csv", "r", newline="") as file:
+        flag = 0
+        reader = csv.reader(file)
+        word = input("Enter the key word of title :: ")
+
+        for rows in reader:
+            if word in rows[1]:
+                flag = 1
+                print("Book Number :: " + rows[0] + "\tBook Title :: " +
+                      rows[1] + "\tBook Author :: " + rows[2] + "\tPrice :: " + rows[3])
+        if flag == 0:
+            print("Books for given title key-word is not present")
+    print()
+
+
+def main():
+    ch = 0
+    while ch != -1:
+        print("Press 1 to Store Book Information")
+        print("Press 2 to Search book by author")
+        print("Press 3 to Search books by a specific price")
+        print("Press 4 to search books by a specific key-word in title")
+        print("Press 5 to Exit")
+
+        ch = int(input("Enter Your Choice :: "))
+
+        if ch == 1:
+            store_books()
+        elif ch == 2:
+            search_book_by_author()
+        elif ch == 3:
+            search_books_by_price()
+        elif ch == 4:
+            search_books_by_word()
+        elif ch == 5:
+            print("Exiting ... ")
+            ch = -1
+        else:
+            print("Invalid Choice !!!")
+            print()
+
+
+if __name__ == "__main__":
+    main()
+----------------------------------------------------------------------------------
+
+tw4:
+
+import sqlite3
+
+# Creating a connection to database
+conn = sqlite3.connect("products.db")
+# Creating a cursor to work on the database
+cur = conn.cursor()
+
+# # Creating the required table
+# cur.execute("""
+#     create table products(
+#     proID integer,
+#     name text,
+#     quantity integer,
+#     price real    
+# )""")
+
+# Insertion of data into database
+n = int(input("Enter total number of data to be inserted into database :: "))
+for i in range(n):
+    print("Enter the details of product ",i+1)
+    pid = int(input("Enter the Product ID :: "))
+    name = input("Enter the Product Name :: ")
+    quantity = int(input("Enter the Quantity of the Product :: "))
+    price = int(input("Enter the Price of the Product :: "))
+
+    cur.execute("insert into products values(:pid,:name,:quantity,:price)",
+    {
+        'pid':pid,
+        'name':name,
+        'quantity':quantity,
+        'price':price
+    })
+
+    # Commit changes
+    conn.commit()
+
+# Fetching all data from the products table in database 
+data = cur.execute("select * from products")
+for rows in data:
+    print(rows)
+
+# Delete a product from database by product id given by user
+delete_id = input("Enter the Id of product whose data is to be deleted :: ")
+cur.execute("delete from products where proid = :pid",{
+    'pid':delete_id
+})
+# Commit changes
+conn.commit()
+
+# Increase price of all products whose current price is less than 50 by 10%
+cur.execute("update products set price = (price+(price/10)) where price < 50")
+# Commit changes
+conn.commit()
+
+
+# Display all the products whose quantity is less than 40
+data2 = cur.execute("select * from products where quantity < 40")
+for row in data2:
+    print(row)
+
+# Commit changes
+conn.commit()
+# Cloase connection
+conn.close()
+------------------------------------------------------------------------------------------------------------------------------
+tw5:
+
+class Product:
+    def __init__(self, name, price):
+        self._name = name
+        self._price = price
+    
+    def get_name(self):
+        return self._name
+    
+    def get_price(self):
+        return self._price
+
+
+class Order:
+    def __init__(self, order_id):
+        self._order_id = order_id
+        self._products = []
+    
+    def get_order_id(self):
+        return self._order_id
+    
+    def add_product(self, product):
+        self._products.append(product)
+    
+    def calculate_total(self):
+        return sum(product.get_price() for product in self._products)
+
+
+class Customer:
+    def __init__(self, name, email):
+        self._name = name
+        self._email = email
+        self._orders = []
+    
+    def get_name(self):
+        return self._name
+    
+    def get_email(self):
+        return self._email
+    
+    def place_order(self, order):
+        self._orders.append(order)
+    
+    def get_orders(self):
+        return self._orders
+
+
+# Create products
+product1 = Product("Product 1", 10)
+product2 = Product("Product 2", 20)
+product3 = Product("Product 3", 15)
+
+# Create an order
+order = Order(1)
+order.add_product(product1)
+order.add_product(product2)
+order.add_product(product3)
+
+# Create a customer
+customer = Customer("John Doe", "john@example.com")
+customer.place_order(order)
+
+# Display customer details and order total
+print(f"Customer: {customer.get_name()} ({customer.get_email()})")
+orders = customer.get_orders()
+for order in orders:
+    print(f"Order ID: {order.get_order_id()}, Total: {order.calculate_total()}")
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+tw 6:
+
+class Person:  # Creating parent class "Person"
+    def __init__(self, fname="", lname="", email=""):  # creating parent class consructor
+        self.fname = fname  # Assigning the values for fname,lname,email
+        self.lname = lname
+        self.email = email
+
+    def getFullname(self):  # Method to get full name
+        return self.fname+" "+self.lname  # returns fname+lane to the calling function
+
+
+class Customer(Person):  # creating child class "Customer" that inherits parent class "Person"
+    def __init__(self, fname, lname, email, cust_id):  # constructor for class "Customer"
+        # calling constructor of parent class
+        Person.__init__(self, fname, lname, email)
+        # creating and assigning the value for new attribute "cust_id" for child classs "Customer"
+        self.cust_id = cust_id
+
+    def getCustId(self):  # creating method that returns "cust_id" to the calling function
+        return self.cust_id
+
+
+class Employee(Person):  # creating child class "Employee" that inherits parent class "Person"
+    def __init__(self, fname, lname, email, PAN):  # constructor for child class "Employee"
+        Person.__init__(self, fname, lname, email)
+        self.PAN = PAN
+
+    def getPAN_no(self):
+        return self.PAN
+
+
+def Display(Person):  # global method to display the details
+
+    # checks if the object passed a "Customer" class object by using "isinstance()" function
+    if isinstance(Person, Customer):
+        print("Its a Customer class Object")
+        print(f"Customer Name :: {Person.getFullname()}")
+        print(f"Customer Number :: {Person.getCustId()}")
+    else:
+        print("Its a Employee class Object")
+        print(f"Employee Name :: {Person.getFullname()}")
+        print(f"Employee PAN Number :: {Person.getPAN_no()}")
+
+
+def main():  # main function to run the prog
+    # creating object for "Customer" class and passing the values to constructor
+    Cust_obj = Customer("abc", "xyz", "abcxyz@mno.com", 16)
+    # creating object for "Employee" class and passing the valus tpo the constructor
+    Emp_obj = Employee("abc", "xyz", "abcxyz@mno.com", "XXXXXXXXXX")
+
+    Display(Cust_obj)
+    print()
+    Display(Emp_obj)
+
+
+if __name__ == "__main__":  # conditioon to check if there is a function named "main()" in the program
+    main()  # class main function to run the program
+------------------------------------------------------------------------------------------------------------------------
+tw7:
+
+from tkinter import *
+
+root = Tk()
+root.title("Simple Calculator")
+
+
+first_label = Label(root, text="First Number: ")
+first_label.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
+Second_label = Label(root, text="Second Number: ")
+Second_label.grid(row=1, column=0, columnspan=2, padx=5, pady=5)
+res_label = Label(root, text="Result")
+res_label.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
+
+first_entry = Entry(root, width=15)
+first_entry.grid(row=0, column=3, columnspan=2, padx=5, pady=5)
+second_entry = Entry(root, width=15)
+second_entry.grid(row=1, column=3, columnspan=2, padx=5, pady=5)
+
+res_entry = Entry(root, text="", width=15)
+res_entry.grid(row=3, column=3, columnspan=2)
+
+
+def add():
+    num1 = int(first_entry.get())
+    num2 = int(second_entry.get())
+    res = num1+num2
+    res_entry.delete(0, END)
+    res_entry.insert(0, res)
+
+
+def div():
+    num1 = int(first_entry.get())
+    num2 = int(second_entry.get())
+    res = num1/num2
+    res_entry.delete(0, END)
+    res_entry.insert(0, res)
+
+
+def sub():
+    num1 = int(first_entry.get())
+    num2 = int(second_entry.get())
+    res = num1-num2
+    res_entry.delete(0, END)
+    res_entry.insert(0, res)
+
+
+def mul():
+    num1 = int(first_entry.get())
+    num2 = int(second_entry.get())
+    res = num1*num2
+    res_entry.delete(0, END)
+    res_entry.insert(0, res)
+
+
+add_btn = Button(root, text="ADD", command=add)
+add_btn.grid(row=2, column=1)
+sub_btn = Button(root, text="SUB", command=sub)
+sub_btn.grid(row=2, column=2)
+div_btn = Button(root, text="DIV", command=div)
+div_btn.grid(row=2, column=3)
+mul_btn = Button(root, text="MUL", command=mul)
+mul_btn.grid(row=2, column=4)
+
+root.mainloop()
+------------------------------------------------------------------------
+tw 8:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+
+# Calculate and display key statistics
+def stats(data):
+    mean_score = data['Score'].mean()
+    median_score = data['Score'].median()
+    std_deviation = data['Score'].std()
+    min_score = data['Score'].min()
+    max_score = data['Score'].max()
+    print("Key Statistics:")
+    print(f"Mean Score: {mean_score:.2f}")
+    print(f"Median Score: {median_score}")
+    print(f"Standard Deviation: {std_deviation:.2f}")
+    print(f"Minimum Score: {min_score}")
+    print(f"Maximum Score: {max_score}")
+    print(f"Number of Students: {len(data)}")
+
+
+
+
+# Create a histogram of scores
+def visualize(data):
+    plt.figure(figsize=(10, 6))
+    plt.hist(data['Score'], bins=6, edgecolor='black', alpha=0.7)
+    plt.title('Exam Score Distribution')
+    plt.xlabel('Score')
+    plt.ylabel('Frequency')
+    plt.grid(True)
+    plt.show()
+
+    toppers=data[data['Score']>=90]
+    plt.figure(figsize=(10,6))
+    plt.bar(toppers['Student'],toppers['Score'],color='black',alpha=0.7)
+    plt.title('Top performing students')
+    plt.xlabel('Name')
+    plt.ylabel('Score')
+    plt.xticks(rotation=45)
+    plt.grid(True)
+    plt.show()
+
+
+def main():
+    # Read the CSV file
+    csv_file = 'exam_scores.csv'  # Replace with your file path
+    data = pd.read_csv(csv_file)
+    stats(data)
+    visualize(data)
+
+if __name__ == '__main__':
+    main()
